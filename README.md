@@ -104,9 +104,9 @@ To speed up generation (or if the weather particle simulator is not setup), down
 
 Verify that the following files exist: `data/source/kitti/data_object/training/image_2/000000.png`, `data/source/kitti/data_object/training/image_2/depth/000000.png`, `data/source/kitti/data_object/training/calib/000000.txt` or adjust the file structure if needed.
 
-To generate rain of 10mm/hr fall rate on the first 10 frames of each sequence of KITTI, run:  
+To generate rain of 25mm/hr fall rate on the first 10 frames of each sequence of KITTI, run:  
 ```sh
-python main.py --dataset kitti --intensity 10 --frame_end 10 --verbose
+python main.py --dataset kitti --intensity 25 --frame_end 10 --verbose
 ```
 
 Output will be located in `data/output/kitti`. Drop the `frame_end` argument to render the full rainy dataset or refer to the [Advanced usage](#advanced-usage) for more examples. 
@@ -116,17 +116,17 @@ Output will be located in `data/output/kitti`. Drop the `frame_end` argument to 
 
 #### Cityscapes
 
-Download the "leftImg8bit" dataset from [here](https://www.cityscapes-dataset.com/downloads/), and and our depth files from [here](https://www.rocq.inria.fr/rits_files/download.php?file=computer-vision/weather-augment/weather_cityscapes_leftImg8bit_train_depth.zip).
+Download the "leftImg8bit" dataset from [here](https://www.cityscapes-dataset.com/downloads/), and our depth files from [here](https://www.rocq.inria.fr/rits_files/download.php?file=computer-vision/weather-augment/weather_cityscapes_leftImg8bit_train_depth.zip).
 Extract all in `data/source/cityscapes`.
 
 To speed up generation (or if the weather particle simulator is not setup), download particles simulation files from [here](https://www.rocq.inria.fr/rits_files/download.php?file=computer-vision/weather-augment/weather_cityscapes_particles.zip)) and extract files in `data/particles`.
 
 Verify that the following files exist: `data/source/cityscapes/leftImg8bit/train/aachen/aachen_000000_000019_leftImg8bit.png`, `data/source/cityscapes/leftImg8bit/train/depth/aachen/aachen_000000_000019_leftImg8bit.png` or adjust the file structure if needed.
 
-To generate rain of 10mm/hr fall rate on the first 2 frames of each sequence of Cityscapes, run:  
-`python main.py --dataset cityscapes --intensity 10 --frame_end 2 --verbose`  
+To generate rain of 25mm/hr fall rate on the first 2 frames of each sequence of Cityscapes, run:  
+`python main.py --dataset cityscapes --intensity 25 --frame_end 2 --verbose`  
 Alternatively you can render only one sequence, for example with:  
-`python main.py --dataset cityscapes --sequences leftImg8bit/train/aachen --intensity 10 --frame_end 10 --verbose`
+`python main.py --dataset cityscapes --sequences leftImg8bit/train/aachen --intensity 25 --frame_end 10 --verbose`
 
 Output will be located in `data/output/cityscapes`. Drop the `frame_end` argument to render the full rainy dataset or refer to the [Advanced usage](#advanced-usage) for more examples.
 
@@ -237,7 +237,7 @@ You may refer to existing config files `config/*.py` for sample usage.
 ### Running
 
 Once data and config are prepared, you may run the rendering with:  
-`python main.py --dataset customdb --intensity 10 --frame_end 10 --verbose`  (replace "**customdb**" with your dataset name)
+`python main.py --dataset customdb --intensity 25 --frame_end 10 --verbose`  (replace "**customdb**" with your dataset name)
 
 Output will be located in `data/output/customdb`.
 
