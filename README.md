@@ -48,8 +48,10 @@ Tested on both Linux & Windows with
 
 Create your conda virtual environment:
 ```sh
-conda create --name py36_weatheraugment python=3.6 opencv numpy matplotlib tqdm imageio pillow natsort glob2 scipy scikit-learn scikit-image pexpect
+conda create --name py36_weatheraugment python=3.6 opencv numpy matplotlib tqdm imageio pillow natsort glob2 scipy scikit-learn scikit-image pexpect -y
+
 conda activate py36_weatheraugment
+
 pip install pyclipper imutils
 ```
 
