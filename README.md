@@ -102,7 +102,7 @@ Extract all in `data/source/kitti/data_object`.
 
 To speed up generation (or if the weather particle simulator is not setup), download particles simulation files from [here](https://www.rocq.inria.fr/rits_files/download.php?file=computer-vision/weather-augment/weather_kitti_particles.zip) and extract files in `data/particles`.
 
-Assess the following files exist: `data/source/kitti/data_object/training/image_2/000000.png`, `data/source/kitti/data_object/training/image_2/depth/000000.png`, `data/source/kitti/data_object/training/calib/000000.txt` or adjust the file structure if needed.
+Verify that the following files exist: `data/source/kitti/data_object/training/image_2/000000.png`, `data/source/kitti/data_object/training/image_2/depth/000000.png`, `data/source/kitti/data_object/training/calib/000000.txt` or adjust the file structure if needed.
 
 To generate rain of 10mm/hr fall rate on the first 10 frames of each sequence of KITTI, run:  
 ```sh
@@ -121,7 +121,7 @@ Extract all in `data/source/cityscapes`.
 
 To speed up generation (or if the weather particle simulator is not setup), download particles simulation files from [here](https://www.rocq.inria.fr/rits_files/download.php?file=computer-vision/weather-augment/weather_cityscapes_particles.zip)) and extract files in `data/particles`.
 
-Assess the following files exist: `data/source/cityscapes/leftImg8bit/train/aachen/aachen_000000_000019_leftImg8bit.png`, `data/source/cityscapes/leftImg8bit/train/depth/aachen/aachen_000000_000019_leftImg8bit.png` or adjust the file structure if needed.
+Verify that the following files exist: `data/source/cityscapes/leftImg8bit/train/aachen/aachen_000000_000019_leftImg8bit.png`, `data/source/cityscapes/leftImg8bit/train/depth/aachen/aachen_000000_000019_leftImg8bit.png` or adjust the file structure if needed.
 
 To generate rain of 10mm/hr fall rate on the first 2 frames of each sequence of Cityscapes, run:  
 `python main.py --dataset cityscapes --intensity 10 --frame_end 2 --verbose`  
