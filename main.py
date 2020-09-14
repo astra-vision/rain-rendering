@@ -117,7 +117,7 @@ def check_arg(args):
                         help='Save environment maps, useful for debug purposes. NOTE: envmap are overwritten if they exist, regardless of the conflict strategy.',
                         action='store_true')
 
-    parser.add_argument('-v', '--verbose',
+    parser.add_argument('--noverbose',
                         action='store_true')
 
     parser.add_argument('--force_particles',
@@ -128,6 +128,7 @@ def check_arg(args):
 
     assert not results.force_particles or results.conflict_strategy != "skip", "If particles simulator is forced, cannot skip"
 
+    results.verbose = not results.noverbose
     results.texture = os.path.join(results.streaks_db, 'env_light_database', 'size32')
     results.norm_coeff = os.path.join(results.streaks_db, 'env_light_database', 'txt', 'normalized_env_max.txt')
 

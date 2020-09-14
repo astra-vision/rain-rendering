@@ -1,10 +1,9 @@
 # Rain Rendering for Evaluating and Improving Robustness to Bad Weather
 
 Official repository.  
-This code can be used to augment any clear weather images with controllable amount of rain, using our Physic Based Rendering (PBR) pipeline. 
-It allows evaluating or training algorithms in rain, to improve robustness, detect rain, remove rain, etc.
+This code is to augment clear weather images with controllable amount of rain using our physics-based rendering. It allows evaluating/training algorithms, improving robustness to rain, detecting/removing rain, etc.
 
-We provide pre generated augmented datasets in the [dataset zoo](#dataset-zoo).
+We provide rain-augmented datasets in the [dataset zoo](#dataset-zoo).
 
 ## Paper 
 
@@ -20,8 +19,8 @@ GAN+PBR pipeline:
 ![alt text](doc/ganpbr_pipeline.png "GAN+PBR pipeline")
 //-->
 
-Rain Rendering for Evaluating and Improving Robustness to Bad Weather \
-[Maxime Tremblay](http://vision.gel.ulaval.ca/en/people/Id_637/index.php), Shirsendu S. Halder, [Raoul de Charette](https://team.inria.fr/rits/membres/raoul-de-charette/), [Jean-François Lalonde](http://vision.gel.ulaval.ca/~jflalonde/)  
+[Rain Rendering for Evaluating and Improving Robustness to Bad Weather](https://arxiv.org/abs/2009.03683) \
+[Maxime Tremblay](http://vision.gel.ulaval.ca/en/people/Id_637/index.php), [Shirsendu S. Halder](https://scholar.google.com/citations?user=A_e7SA8AAAAJ), [Raoul de Charette](https://team.inria.fr/rits/membres/raoul-de-charette/), [Jean-François Lalonde](http://vision.gel.ulaval.ca/~jflalonde/)  
 Inria, Université Laval. IJCV 2020
 
 If you find our work useful, please cite:
@@ -33,7 +32,7 @@ If you find our work useful, please cite:
   year={2020}
 }
 ```
-This works is accepted at IJCV 2020 (preprint coming up). It is an improvement and extension of our [ICCV'19 paper](https://arxiv.org/abs/1908.10335).
+This works is accepted at IJCV 2020 ([preprint](https://arxiv.org/abs/2009.03683)) and is an extension of our [ICCV'19 paper](https://arxiv.org/abs/1908.10335).
 
 
 ## Preparation
@@ -55,7 +54,7 @@ conda activate py36_weatheraugment
 pip install pyclipper imutils
 ```
 
-Our code relies on third parties researches kindly shared by the original authors. Specifically, we use the particles simulator of ([de Charette et al., ICCP 2012](https://github.com/cv-rits/weather-particle-simulator)), and the rainstreak illumination database of ([Garg and Nayar, TOG 2006](https://www1.cs.columbia.edu/CAVE/databases/rain_streak_db/rain_streak.php)).
+Our code relies on kindly shared third parties researches. Specifically, we use the particles simulator of ([de Charette et al., ICCP 2012](https://github.com/cv-rits/weather-particle-simulator)), and the rainstreak illumination database of ([Garg and Nayar, TOG 2006](https://www1.cs.columbia.edu/CAVE/databases/rain_streak_db/rain_streak.php)).
 To install all third parties:
 * Download the Columbia Uni. [rain streak database](https://www.cs.columbia.edu/CAVE/databases/rain_streak_db/databases.zip) and extract files in `3rdparty/rainstreakdb`
 * **\[Optional, cf. below\]** Install the CMU [weather particle simulator](https://github.com/cv-rits/weather-particle-simulator) with 
@@ -64,7 +63,7 @@ To install all third parties:
 Note that without the weather particle simulator, you will only be able to run our rendering using our pre-computed particles simulation on a few datasets. Cf. [dataset zoo](#dataset-zoo).
 
 ## Running the code
-The renderer augment sequences of images with rain, with the following required data:
+The renderer augment sequences of images with rain, using the following required data:
 - images
 - depth maps
 - calibration files (optional, KITTI format)
@@ -88,8 +87,8 @@ data/output/DATASET/SEQUENCE/rain/10mm/rainy_mask/file0001.png      # Rainy mask
 data/output/DATASET/SEQUENCE/envmap/file0001.png                    # Estimated environment maps (only output with --save_envmap)
 ```
 
-We provide guidance and all required files to generate rain on [KITTI](http://www.cvlibs.net/datasets/kitti), [Cityscapes](https://www.cityscapes-dataset.com), [nuScenes](https://www.nuscenes.org). We suggest starting with KITTI, which is easiest.  
-You may refer to the custom section to render rain on your own images.
+We provide guidance and all required files to generate rain on [KITTI](http://www.cvlibs.net/datasets/kitti), [Cityscapes](https://www.cityscapes-dataset.com), [nuScenes](https://www.nuscenes.org).
+You may refer to the custom section below to render rain on your own images.
 
 
 ### Rendering rain on KITTI, Cityscapes, nuScenes
@@ -100,13 +99,13 @@ _Notes: For ready-to-use rainy versions of KITTI/Cityscapes/nuScenes, refer to t
 To generate rain on the [2D object subset of KITTI](http://www.cvlibs.net/datasets/kitti/eval_object.php?obj_benchmark=2d), download "left color images of object data set" from [here](http://www.cvlibs.net/download.php?file=data_object_image_2.zip), "camera calibration matrices of object data set" from [here](http://www.cvlibs.net/download.php?file=data_object_calib.zip), and our depth files from [here](https://www.rocq.inria.fr/rits_files/download.php?file=computer-vision/weather-augment/weather_kitti_data_object_training_image_2_depth.zip).
 Extract all in `data/source/kitti/data_object`.
 
-To speed up generation (or if the weather particle simulator is not setup), download particles simulation files from [here](https://www.rocq.inria.fr/rits_files/download.php?file=computer-vision/weather-augment/weather_kitti_particles.zip) and extract files in `data/particles`.
+You should consider downloading pre-computed KITTI particles simulations from [here](https://www.rocq.inria.fr/rits_files/download.php?file=computer-vision/weather-augment/weather_kitti_data_object_particles.zip) and extract files in `data/particles/kitti`. (This is mandatory if particles simulator is not set up)
 
-Verify that the following files exist: `data/source/kitti/data_object/training/image_2/000000.png`, `data/source/kitti/data_object/training/image_2/depth/000000.png`, `data/source/kitti/data_object/training/calib/000000.txt` or adjust the file structure if needed.
+Verify that the following files exist `data/source/kitti/data_object/training/image_2/000000.png`, `data/source/kitti/data_object/training/image_2/depth/000000.png`, `data/source/kitti/data_object/training/calib/000000.txt` and `data/particles/kitti/data_object/rain/25mm/` (if you downloaded particles files). Adjust your file structure if needed.
 
 To generate rain of 25mm/hr fall rate on the first 10 frames of each sequence of KITTI, run:  
 ```sh
-python main.py --dataset kitti --intensity 25 --frame_end 10 --verbose
+python main.py --dataset kitti --intensity 25 --frame_end 10
 ```
 
 Output will be located in `data/output/kitti`. Drop the `frame_end` argument to render the full rainy dataset or refer to the [Advanced usage](#advanced-usage) for more examples. 
@@ -119,20 +118,22 @@ Output will be located in `data/output/kitti`. Drop the `frame_end` argument to 
 Download the "leftImg8bit" dataset from [here](https://www.cityscapes-dataset.com/downloads/), and our depth files from [here](https://www.rocq.inria.fr/rits_files/download.php?file=computer-vision/weather-augment/weather_cityscapes_leftImg8bit_train_depth.zip).
 Extract all in `data/source/cityscapes`.
 
-To speed up generation (or if the weather particle simulator is not setup), download particles simulation files from [here](https://www.rocq.inria.fr/rits_files/download.php?file=computer-vision/weather-augment/weather_cityscapes_particles.zip)) and extract files in `data/particles`.
+You should also consider downloading Cityscapes pre-computed particles simulations from [here](https://www.rocq.inria.fr/rits_files/download.php?file=computer-vision/weather-augment/weather_cityscapes_particles.zip) and extract files in `data/particles/cityscapes`. (This is mandatory if particles simulator is not set up)
 
-Verify that the following files exist: `data/source/cityscapes/leftImg8bit/train/aachen/aachen_000000_000019_leftImg8bit.png`, `data/source/cityscapes/leftImg8bit/train/depth/aachen/aachen_000000_000019_leftImg8bit.png` or adjust the file structure if needed.
+Verify that the following files exist: `data/source/cityscapes/leftImg8bit/train/aachen/aachen_000000_000019_leftImg8bit.png`, `data/source/cityscapes/leftImg8bit/train/depth/aachen/aachen_000000_000019_leftImg8bit.png` and `/data/particles/cityscapes/leftImg8bit/rain/25mm/` (if you downloaded particles files). Adjust your file structure if needed.
 
 To generate rain of 25mm/hr fall rate on the first 2 frames of each sequence of Cityscapes, run:  
-`python main.py --dataset cityscapes --intensity 25 --frame_end 2 --verbose`  
+`python main.py --dataset cityscapes --intensity 25 --frame_end 2`  
 Alternatively you can render only one sequence, for example with:  
-`python main.py --dataset cityscapes --sequences leftImg8bit/train/aachen --intensity 25 --frame_end 10 --verbose`
+`python main.py --dataset cityscapes --sequences leftImg8bit/train/aachen --intensity 25 --frame_end 10`
 
 Output will be located in `data/output/cityscapes`. Drop the `frame_end` argument to render the full rainy dataset or refer to the [Advanced usage](#advanced-usage) for more examples.
 
 #### nuScenes (coming up)
 
 Recent updates broke nuScenes compatibility, this will be resolved soon. Stay tuned.
+To run our rendering on your custom dataset, you must provide a configuration file. Configuration files are stored in config/ and must be named after the dataset.
+
 
 <!--
 **Prerequisite**  
@@ -168,7 +169,7 @@ The code requires your data to be organized in _dataset_ (root folder) with _seq
 data/source/DATASET/SEQUENCE/rgb/xxx.png           # Source images (color, 8 bits)
 data/source/DATASET/SEQUENCE/depth/xxx.png         # Depth images (16 bits, with depth_in_meter = depth/256.)
 ```
-(You may optionally provide intrinsic calib files, though we currently only support KITTI format.)
+(_optionally_ intrinsic calib files can be provided, in KITTI format.)
 
 To run our rendering on your custom dataset, you must provide a configuration file. Configuration files are stored in `config/` and must be named after the dataset.
 
@@ -176,7 +177,7 @@ The dataset configuration file should expose two functions:
 * `resolve_paths(params)` which updates and returns the `params` dictionary with paths params.images\[sequence\], params.depth\[sequence\], params.calib\[sequence\] the sequence dictionary paths to images/depth/calib data for _all_ sequences of the dataset.
 * `settings()` which returns a dictionary with dataset settings (and optionally sequence-wise settings).
  
-Here is a sample dataset configuration file `config/customdb.py`:
+Here is a sample configuration file `config/customdb.py`:
 ```python
 import os
 def resolve_paths(params):
@@ -232,12 +233,12 @@ In above example, this will simulate a rain event of 10 seconds.
 To ensure temporal consistency, continuous frame use continuous simulation steps.
 
 Simulations can have fancy settings, such as camera motion speed (e.g. to mimic a vehicle motion), varying rain fall rates (e.g. to mimic rain of different intensity), changing focals/exposure, etc...
-You may refer to existing config files `config/*.py` for sample usage.
+You may refer to sample config files in `config/`.
 
 ### Running
 
 Once data and config are prepared, you may run the rendering with:  
-`python main.py --dataset customdb --intensity 25 --frame_end 10 --verbose`  (replace "**customdb**" with your dataset name)
+`python main.py --dataset customdb --intensity 25 --frame_end 10`  (replace "**customdb**" with your dataset name)
 
 Output will be located in `data/output/customdb`.
 
@@ -247,16 +248,19 @@ Output will be located in `data/output/customdb`.
 
 ## Advanced usage
 
-You can generate multiple rain fall rate at once if you provide comma separated intensity. For example,   
-`python main.py --dataset kitti --intensity 1,5,10,20 --verbose`  renders rain on all sequences of KITTI at 1, 5, 10, 20mm/hr
+You can generate multiple rain fall rate at once if you provide comma separated intensities. For example,   
+`python main.py --dataset kitti --intensity 1,5,10,20`  renders rain on all sequences of KITTI at 1, 5, 10, 20mm/hr
+
+You can generate rain on multiple sequences using comma separated sequences. For example,  
+`python main.py --dataset cityscapes --sequence leftImg8bit/train/aachen,leftImg8bit/train/bochum  --intensity 10,20`  renders 10mm and 20mm rain on _aachen_ and _bochum_ sequences only
 
 You can control which part of the sequence is rendered with, `--frame_*` parameters. For example,  
-`python main.py --dataset kitti --intensity 1,5 --frame_start 5 --frame_end 25 --verbose`  generates rain on frames 5-25 from each sequence  
-`python main.py --dataset kitti --intensity 1,5 --frame_step 100 --verbose`  generates every 100 other frames of all sequences ; extremely useful for quick overview of a sequence
+`python main.py --dataset kitti --intensity 1,5 --frame_start 5 --frame_end 25`  generates rain on frames 5-25 from each sequence  
+`python main.py --dataset kitti --intensity 1,5 --frame_step 100`  generates every 100 other frames of all sequences (extremely useful for quick overview of a sequence)
 
 #### Multi threads rendering  
 Rain rendering is quite long. You can use multithread rendering which significantly speeds up. For example,  
-`python main_threaded.py --dataset kitti --intensity 1,5,10,20,30 --frame_start 0 --frame_end 8 --verbose`  (note all arguments are automatically passed to each main.py thread)
+`python main_threaded.py --dataset kitti --intensity 1,5,10,20,30 --frame_start 0 --frame_end 8`  (note all arguments are automatically passed to each main.py thread)
 
 **Known limitation:** there might be some conflicts if multiple renderers while threaded start the particles simulator. Hence, ensure particle simulation files are ready prior to the multi-threaded rendering. 
 
@@ -268,7 +272,7 @@ Particles simulations can be computed in a multi-thread manner, separate from ou
 
 ### Rainy versions of KITTI, Cityscapes, nuScenes
 
-If you wish to directly obtain the rainy versions of the dataset, please visit our [ICCV'19 paper website](https://team.inria.fr/rits/computer-vision/weather-augment/) which contains Weather Kitti and Weather Cityscapes in varying rain / fog weathers, including rain masks, fog mask, etc.  
+To download the rainy versions of the datasets, please visit our [ICCV'19 paper website](https://team.inria.fr/rits/computer-vision/weather-augment/).  
 
 ### Data to generate rain on KITTI, Cityscapes, nuScenes
 
@@ -279,13 +283,13 @@ Here, we gather the direct links to download required data to generate rain on p
 
 | Data          | Kitti (Object detection)         | Kitti (Raw data)         | Cityscapes  | nuScenes | 
 | ------------- | :-----------: | :-----------: | :---------: | :------: |
-| Images        | [link](http://www.cvlibs.net/download.php?file=data_object_image_2.zip)  | seq 0032 [link](https://s3.eu-central-1.amazonaws.com/avg-kitti/raw_data/2011_09_26_drive_0032/2011_09_26_drive_0032_sync.zip), seq 0056 [link](https://s3.eu-central-1.amazonaws.com/avg-kitti/raw_data/2011_09_26_drive_0056/2011_09_26_drive_0056_sync.zip)  | "leftImg8bit" from [link](https://www.cityscapes-dataset.com/downloads/)    | [~~link~~]() |
-| Depth         | [link](https://www.rocq.inria.fr/rits_files/download.php?file=computer-vision/weather-augment/weather_kitti_data_object_training_image_2_depth.zip)  | seq 0032 [link](https://www.rocq.inria.fr/rits_files/download.php?file=computer-vision/weather-augment/weather_kitti_raw_data_2011_09_26_2011_09_26_drive_0032_sync_image_02_data_depth.zip), seq 0056 [link](https://www.rocq.inria.fr/rits_files/download.php?file=computer-vision/weather-augment/weather_kitti_raw_data_2011_09_26_2011_09_26_drive_0056_sync_image_02_data_depth.zip)  | [link](https://www.rocq.inria.fr/rits_files/download.php?file=computer-vision/weather-augment/weather_cityscapes_leftImg8bit_train_depth.zip)    | [~~link~~]() |
-| Calibration         | [link](http://www.cvlibs.net/download.php?file=data_object_calib.zip)  | _included in images_  | - | - |
-| Particles*     <td colspan=2 align=center> [link](https://www.rocq.inria.fr/rits_files/download.php?file=computer-vision/weather-augment/weather_kitti_particles.zip)  | [link](https://www.rocq.inria.fr/rits_files/download.php?file=computer-vision/weather-augment/weather_cityscapes_particles.zip)    | [~~link~~]() |
+| Images        | [link](http://www.cvlibs.net/download.php?file=data_object_image_2.zip)  | seq 0032 [link](https://s3.eu-central-1.amazonaws.com/avg-kitti/raw_data/2011_09_26_drive_0032/2011_09_26_drive_0032_sync.zip) <br> seq 0056 [link](https://s3.eu-central-1.amazonaws.com/avg-kitti/raw_data/2011_09_26_drive_0056/2011_09_26_drive_0056_sync.zip)  | "leftImg8bit" from [link](https://www.cityscapes-dataset.com/downloads/)    | coming up |
+| Depth         | [link](https://www.rocq.inria.fr/rits_files/download.php?file=computer-vision/weather-augment/weather_kitti_data_object_training_image_2_depth.zip)  | seq 0032 [link](https://www.rocq.inria.fr/rits_files/download.php?file=computer-vision/weather-augment/weather_kitti_raw_data_2011_09_26_2011_09_26_drive_0032_sync_image_02_data_depth.zip) <br> seq 0056 [link](https://www.rocq.inria.fr/rits_files/download.php?file=computer-vision/weather-augment/weather_kitti_raw_data_2011_09_26_2011_09_26_drive_0056_sync_image_02_data_depth.zip)  | [link](https://www.rocq.inria.fr/rits_files/download.php?file=computer-vision/weather-augment/weather_cityscapes_leftImg8bit_train_depth.zip)    | coming up |
+| Calibration   | [link](http://www.cvlibs.net/download.php?file=data_object_calib.zip)  | _included in images_  | - | - |
+| Particles*    | [link](https://www.rocq.inria.fr/rits_files/download.php?file=computer-vision/weather-augment/weather_kitti_data_object_particles.zip)| seq 0032 [link](https://www.rocq.inria.fr/rits_files/download.php?file=computer-vision/weather-augment/weather_kitti_raw_data_2011_09_26_2011_09_26_drive_0032_sync_particles.zip) <br> seq 0056 [link](https://www.rocq.inria.fr/rits_files/download.php?file=computer-vision/weather-augment/weather_kitti_raw_data_2011_09_26_2011_09_26_drive_0056_sync_particles.zip)  | [link](https://www.rocq.inria.fr/rits_files/download.php?file=computer-vision/weather-augment/weather_cityscapes_particles.zip)    | coming up |
 
-\* Particles include rain physical simulation at 1, 2, 3, 4, 5, 10, 20, 25, 30, 40, 50, 60, 70, 80, 90, 100, 150, 200mm/hr. Downloading particles files will significantly speed up rendering on above datasets. If you do so, extract files in `data/particles`. When running the renderer, if files are correctly located "All particles simulation ready" should print in the log.
 
+\* For each sequence, we provide 38 rain physical simulations at: 1, 2, 3, ..., 10, 15, 20, ..., 100, 110, 120, ..., 200mm/hr. This prevents re-running physical simulations (which is long). If you do so, extract files in `data/particles/DATABASE`. When running the renderer, if files are correctly located "All particles simulations ready" should print in the log.
 <!--
 ##### Additional data
 This [~~link~~]() points to the 50 hand made semantic segmentation for nuScenes. 
@@ -300,4 +304,4 @@ Using the preceding datasets, we finetuned various network to improve the perfor
 ### License
 
 The code is released under the [Apache 2.0 license](./LICENSE).  
-The datasets are released under the [Creative Commons Attribution-NonCommercial-ShareAlike 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/).
+The data in the dataset zoo are released under the [Creative Commons Attribution-NonCommercial-ShareAlike 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/).

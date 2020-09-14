@@ -126,8 +126,7 @@ if __name__ == "__main__":
                     # In multithread, the progress is a bad idea; it could make the log file EXTREMELY big
                     if '-v' in _new_args:
                         _new_args.remove('-v')
-                    if '--verbose' in _new_args:
-                        _new_args.remove('--verbose')
+                    _new_args.append('--noverbose')
 
                     # Replace intensity
                     _new_args[_new_args.index('--intensity') + 1] = str(intensity)
@@ -161,8 +160,7 @@ if __name__ == "__main__":
             _new_args.append('--conflict_strategy')
             _new_args.append('skip')
 
-            if '--verbose' in _new_args:
-                _new_args.remove('--verbose')
+            _new_args.append('--noverbose')
 
             # Replace intensity
             _new_args[_new_args.index('--intensity') + 1] = str(intensity)
