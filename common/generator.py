@@ -19,9 +19,6 @@ plt.ion()
 FOG_ATT = 1
 USE_DEPTH_WEIGHTING = 0  # TODO: not used for a while
 
-def particles_path(path, weather):
-    return os.path.join(path, weather["weather"], "{}mm".format(weather["fallrate"]),  '*_camera0.xml')
-
 class Generator:
     def __init__(self, args):
         # strategy

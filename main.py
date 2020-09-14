@@ -6,14 +6,11 @@ import warnings
 import glob2
 import numpy as np
 
-from common import db
+from common import db, my_utils
 from common.generator import Generator
 
 np.random.seed(0)
 warnings.filterwarnings("ignore")
-
-def particles_path(path, weather):
-    return os.path.join(path, weather["weather"], "{}mm".format(weather["fallrate"]),  '*_camera0.xml')
 
 def check_arg(args):
     parser = argparse.ArgumentParser(description='Rain renderer method')
@@ -197,14 +194,14 @@ def check_arg(args):
         results.particles[seq] = db.sim(results.dataset, seq, particles_root)
 
         # Check if there is a need to run simulation
-        weathers_to_run = [w for w in results.weather if len(glob2.glob(particles_path(results.particles[seq]["path"], w))) == 0 or results.force_particles]
+        weathers_to_run = [w for w in results.weather if len(glob2.glob(my_utils.particles_path(results.particles[seq]["path"], w))) == 0 or results.force_particles]
         if len(weathers_to_run) != 0:
             sims_to_run.append({"path": [results.particles[seq]["path"]], "options": [results.particles[seq]["options"]], "weather": weathers_to_run})
 
     if len(sims_to_run) == 0:
-        print(" All particles simulation ready")
+        print(" All particles simulations ready")
     else:
-        print(" {} particles simulation to compute... Simulation will attempt to run automatically".format(len(sims_to_run)))
+        print(" {} particles simulations to compute... Simulations will attempt to run automatically using weather particle simulator".format(len(sims_to_run)))
         for sim in sims_to_run:
             import tools.particles_simulation
             tools.particles_simulation.process(sim, force_recompute=True)  # Current script already decided it has to be re-run
@@ -214,7 +211,7 @@ def check_arg(args):
     particles2 = {}
     for seq in results.sequences:
         try:
-            particles2[seq] = [glob2.glob(particles_path(results.particles[seq]["path"], w))[0] for w in results.weather]
+            particles2[seq] = [glob2.glob(my_utils.particles_path(results.particles[seq]["path"], w))[0] for w in results.weather]
         except Exception:
             print('Something went wrong, cannot locate particles simulation file for sequence {}'.format(seq))
             print("Might crash later on")

@@ -168,3 +168,6 @@ def hash_(obj, path=False, isclose=-1):
         return hash_(obj.__dict__, path=path, isclose=isclose)
     else:
         return hl.md5(obj).hexdigest()
+
+def particles_path(path, weather):
+    return os.path.join(path, weather["weather"], "{}mm".format(weather["fallrate"]),  '*_camera0.xml')
