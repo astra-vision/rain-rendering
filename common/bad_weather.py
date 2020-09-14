@@ -181,7 +181,10 @@ class DBManager:
             my_utils.print_error("No existing path for XML file (" + self.streaks_path_xml + ")")
             exit(-1)
 
-        simulation = parse(self.streaks_path_xml).getroot()
+        try:
+            simulation = parse(self.streaks_path_xml).getroot()
+        except Exception as e:
+            raise Exception("Reading XML file {} crashed, which is likely due to corrupted particles simulation files. If so, delete this simulation folder manually and re-run to allow generation of new simulation.".format(self.streaks_path_xml))
 
         if verbose:
             my_utils.print_progress_bar(0, len(simulation))
