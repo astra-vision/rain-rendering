@@ -111,7 +111,7 @@ if __name__ == "__main__":
         frames_per_thread = 41
         ix = 0
 
-        for frame_start in range(0, args.frame_end, frames_per_thread):
+        for frame_start in range(args.frame_start, args.frame_end, frames_per_thread):
             for intensity in args.intensity:
                 c = 0
                 # modified from range(0, ...)
@@ -137,7 +137,7 @@ if __name__ == "__main__":
                         _new_args[_new_args.index('--frame_end') + 1] = str(min(frame_start + frames_per_thread, args.frame_end))
                     elif args.jump and args.frames:
                         _new_args[_new_args.index('--frames') + 1] = ",".join(
-                            [str((int(f) + c) % 41) for f in _new_args[_new_args.index('--frames') + 1].split(',')])
+                            [str((int(f) + c) % frames_per_thread) for f in _new_args[_new_args.index('--frames') + 1].split(',')])
                         c += args.scenes_per_thread if args.scenes_per_thread else 1
 
                     if "sequences" in args and args.scenes_per_thread:
