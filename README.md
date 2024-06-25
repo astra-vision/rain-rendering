@@ -278,8 +278,6 @@ To download the rainy versions of the datasets, please visit our [ICCV'19 paper 
 
 Here, we gather the direct links to download required data to generate rain on popular datasets.
 
-⚠️ **Note 2024-06-18**: Servers are down, because Inria is moving to a new location. They should be back on early July.
-
 | Data          | Kitti (Object detection)         | Kitti (Raw data)         | Cityscapes  | nuScenes | 
 | ------------- | :-----------: | :-----------: | :---------: | :------: |
 | Images        | [link](http://www.cvlibs.net/download.php?file=data_object_image_2.zip)  | seq 0032 [link](https://s3.eu-central-1.amazonaws.com/avg-kitti/raw_data/2011_09_26_drive_0032/2011_09_26_drive_0032_sync.zip) <br> seq 0056 [link](https://s3.eu-central-1.amazonaws.com/avg-kitti/raw_data/2011_09_26_drive_0056/2011_09_26_drive_0056_sync.zip)  | "leftImg8bit" from [link](https://www.cityscapes-dataset.com/downloads/)    | coming up |
