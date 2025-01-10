@@ -54,9 +54,9 @@ conda activate py36_weatheraugment
 pip install pyclipper imutils
 ```
 
-Our code relies on kindly shared third parties researches. Specifically, we use the particles simulator of ([de Charette et al., ICCP 2012](https://github.com/cv-rits/weather-particle-simulator)), and the rainstreak illumination database of ([Garg and Nayar, TOG 2006](https://www1.cs.columbia.edu/CAVE/databases/rain_streak_db/rain_streak.php)).
+Our code relies on kindly shared third parties researches. Specifically, we use the particles simulator of ([de Charette et al., ICCP 2012](https://github.com/cv-rits/weather-particle-simulator)), and the rainstreak illumination database of ([Garg and Nayar, TOG 2006](https://cave.cs.columbia.edu/projects/categories/project?cid=Physics-Based+Vision&pid=Photorealistic+Rendering+of+Rain+Streaks)).
 To install all third parties:
-* Download the Columbia Uni. [rain streak database](https://www.cs.columbia.edu/CAVE/databases/rain_streak_db/databases.zip) and extract files in `3rdparty/rainstreakdb`
+* Download the Columbia Uni. [rain streak database](https://cave.cs.columbia.edu/old/databases/rain_streak_db/databases.zip) \[[backup link](https://web.archive.org/web/20240820054544/https://www.cs.columbia.edu/CAVE/databases/rain_streak_db/databases.zip)\]and extract files in `3rdparty/rainstreakdb`
 * **\[Optional, cf. below\]** Install the CMU [weather particle simulator](https://github.com/cv-rits/weather-particle-simulator) with 
 `git submodule update --init` and follow "setup" instructions in `3rdparty/weather-particle-simulator/readme.md` to ensure dependencies are resolved.
 
